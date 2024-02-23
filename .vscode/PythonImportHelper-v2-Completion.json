@@ -76,7 +76,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def main():\n    # Create the folder structure and markdown files\n    result = create_folder_and_template_markdown(data, '.')\n    # Print the result\n    print(result)\n    # Create prompts for the markdown files\n    prompts = create_prompts_for_markdown(data)\n    # Print the prompts\n    print(prompts)\n    # Create a notebook with the data and code",
+        "peekOfCode": "def main():\n    # Create the folder structure and markdown files\n    result = create_folder_and_template_markdown(data, '.')\n    # Create prompts for the markdown files\n    prompts = create_prompts_for_markdown(data)\n    # Create a notebook with the data and code\n    notebook_json = python_notebook_create_ipynb_json_with_data_and_code(\"Salesforce_Onboarding_Process_Simulation.ipynb\",data,code,tree)\n    print(notebook_json)\n    notebook_json = python_notebook_create_ipynb_raw_json(\"Salesforce_Onboarding_Process_Simulation.ipynb\",notebook_json)\n    print(notebook_json)",
         "detail": "app",
         "documentation": {}
     },

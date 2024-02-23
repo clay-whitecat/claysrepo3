@@ -1,6 +1,7 @@
 import json
 import os
 
+
 data=[
   {
     "title": "Onboarding Checklist",
@@ -176,6 +177,8 @@ data=[
     "filename": "Offboarding_Process.md"
   }
 ]
+
+# this code was how the data was created
 code = """
     # Re-create the folder structure and prepare markdown files for the wiki format, following the previous plan
 
@@ -218,6 +221,8 @@ code = """
             # Next steps will involve packaging this structure into a downloadable format for local extraction and memory.
 
         """
+
+# this tree was how the data was created and it was used to create the folder structure
 tree="""    
     Salesforce_Onboarding/
     ├── Onboarding_Checklist/
@@ -241,7 +246,6 @@ tree="""
     └── Offboarding_Process/
         └── Offboarding_Process.md
     """
-
 
 def python_notebook_create_ipynb_json_with_data_and_code(filename,data,code,tree):
     import json
@@ -549,8 +553,6 @@ def python_notebook_create_ipynb_json(filename):
         file.write(notebook_json)
     return notebook_json
 
-    
-
 def create_folder_and_template_markdown(data, base_path = "/mnt/data/salesforce_onboarding"):
     # Function to set up the folder structure and markdown files
     def setup_folders_and_files():
@@ -590,15 +592,9 @@ def main():
     # Create the folder structure and markdown files
     result = create_folder_and_template_markdown(data, '.')
 
-    # Print the result
-    print(result)
-
     # Create prompts for the markdown files
     prompts = create_prompts_for_markdown(data)
 
-    # Print the prompts
-    print(prompts)
-    
     # Create a notebook with the data and code
     notebook_json = python_notebook_create_ipynb_json_with_data_and_code("Salesforce_Onboarding_Process_Simulation.ipynb",data,code,tree)
     print(notebook_json)
