@@ -29,6 +29,7 @@ do
     fi  
 done
 
+
 # prep wikis folder and move into it supress errors if it already exists
 mkdir wikis 2>/dev/null
 cd wikis
@@ -41,9 +42,11 @@ do
     case $generator in
         "mkdocs")
             mkdocs new .
+            # build
+            mkdocs build
             ;;  
         "docusaurus")
-            npx @docusaurus/init@2 init .
+            npx @docusaurus
             ;;  
         "vuepress")
             npx create-vuepress-site .
