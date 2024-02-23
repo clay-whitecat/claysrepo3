@@ -2,66 +2,180 @@ import json
 import os
 
 data=[
-    {
-        "title": "Onboarding Checklist",
-        "description": "A comprehensive checklist to ensure all necessary steps are covered for onboarding new employees.",
-        "template_markdown": "# Onboarding Checklist\n\n- Welcome email sent\n- HR paperwork completed\n- Equipment and system access setup\n- First day orientation and schedule",
-        "filename": "Onboarding_Checklist.md"
-    },
-    {
-        "title": "First Two Weeks Engagement",
-        "description": "A plan detailing daily and weekly goals for new employees, focusing on integration and initial training.",
-        "template_markdown": "# First Two Weeks Engagement\n\n- Daily check-ins\n- Role-specific training sessions\n- Introduction to team and key projects",
-        "filename": "First_Two_Weeks_Engagement.md"
-    },
-    {
-        "title": "Technical Setup Process",
-        "description": "Outlines the process for setting up access to technical systems and tools, including Salesforce.",
-        "template_markdown": "# Technical Setup Process\n\n- Salesforce access configuration\n- Email and communication tools setup\n- Hardware and software requirements",
-        "filename": "Technical_Setup_Process.md"
-    },
-    {
-        "title": "Training and Development Plan",
-        "description": "A structured plan covering essential skills, Salesforce competencies, and professional development.",
-        "template_markdown": "# Training and Development Plan\n\n- Salesforce fundamentals\n- Company policies and culture\n- Ongoing learning opportunities",
-        "filename": "Training_and_Development_Plan.md"
-    },
-    {
-        "title": "Performance Evaluation Criteria",
-        "description": "Defines the criteria and process for evaluating the performance of new employees.",
-        "template_markdown": "# Performance Evaluation Criteria\n\n- Specific goals and objectives\n- Feedback mechanisms\n- Regular review sessions",
-        "filename": "Performance_Evaluation_Criteria.md"
-    },
-    {
-        "title": "Regular Check-in Schedule",
-        "description": "Establishes a schedule for regular meetings between managers and new employees to discuss progress and concerns.",
-        "template_markdown": "# Regular Check-in Schedule\n\n- Weekly one-on-one meetings\n- Goals and expectations review\n- Support and feedback",
-        "filename": "Regular_Check-in_Schedule.md"
-    },
-    {
-        "title": "Project Assignment Guidelines",
-        "description": "Provides guidelines for assigning new employees to projects, including scope and expectations.",
-        "template_markdown": "# Project Assignment Guidelines\n\n- Project selection criteria\n- Expectations and deliverables\n- Support and resources available",
-        "filename": "Project_Assignment_Guidelines.md"
-    },
-    {
-        "title": "Feedback and Continuous Improvement Process",
-        "description": "Details the process for giving and receiving feedback, and for fostering continuous improvement.",
-        "template_markdown": "# Feedback and Continuous Improvement Process\n\n- Regular feedback sessions\n- Mechanisms for suggestions\n- Implementation of improvements",
-        "filename": "Feedback_and_Continuous_Improvement_Process.md"
-    },
-    {
-        "title": "Conflict Resolution Framework",
-        "description": "Outlines steps for resolving conflicts within the team, promoting a positive work environment.",
-        "template_markdown": "# Conflict Resolution Framework\n\n- Steps for addressing conflicts\n- Communication guidelines\n- Escalation paths",
-        "filename": "Conflict_Resolution_Framework.md"
-    },
-    {
-        "title": "Offboarding Process",
-        "description": "Describes the process for offboarding employees, ensuring a smooth transition and knowledge transfer.",
-        "template_markdown": "# Offboarding Process\n\n- Knowledge transfer steps\n- System access revocation\n- Exit interviews and feedback",
-        "filename": "Offboarding_Process.md"
-    }]
+  {
+    "title": "Onboarding Checklist",
+    "description": "A comprehensive checklist to ensure all necessary steps are covered for onboarding new employees.",
+    "template_markdown": """
+    # Onboarding Checklist
+    
+    - **Pre-Arrival**
+      - Welcome email sent, including first day agenda
+      - HR paperwork sent for completion
+      - IT notified for equipment and system access setup
+    
+    - **First Day**
+      - Office tour and introduction to team members
+      - First day orientation session
+      - Setup workstation and necessary software, including Salesforce
+    
+    - **First Week**
+      - Begin role-specific training modules
+      - Schedule meet-and-greets with key team members and stakeholders
+      - Assign initial tasks for familiarization with current projects
+    
+    - **First Month**
+      - Evaluate initial performance and provide feedback
+      - Set goals for the probation period
+      - Regular check-ins by the manager or mentor
+    """,
+    "filename": "Onboarding_Checklist.md"
+  },
+  {
+    "title": "First Two Weeks Engagement",
+    "description": "A plan detailing daily and weekly goals for new employees, focusing on integration and initial training.",
+    "template_markdown": """
+    # First Two Weeks Engagement Plan
+    
+    **Objective**: Ensure new employees feel welcomed, understand their role, and are integrated into the team.
+    
+    - **Day 1**: Orientation with HR, introduction to the team, and workstation setup.
+    - **Day 2-5**: Role-specific training, including Salesforce basics. Begin shadowing team members on current projects.
+    - **End of Week 1**: Review with manager to discuss observations, answer questions, and set expectations.
+    - **Week 2**: Deep dive into ongoing projects, more hands-on tasks, and introduction to client-facing work (if applicable).
+    - **End of Week 2**: Feedback session with manager to assess integration, clarify doubts, and plan for upcoming weeks.
+    
+    **Key Focus Areas**: Salesforce training, team integration, role understanding, and initial project involvement.
+    **Success Criteria**: Positive feedback from the employee, clear understanding of role and projects, and active participation in team activities.
+    **Note**: This plan is a general guideline and may be adjusted based on the employee's role and team dynamics.    
+    **Filename**: First_Two_Weeks_Engagement.md
+    **Path**: /mnt/data/salesforce_onboarding/First_Two_Weeks_Engagement/First_Two_Weeks_Engagement.md
+    """,
+    "filename": "First_Two_Weeks_Engagement.md"
+  },
+  {
+    "title": "Technical Setup Process",
+    "description": "Outlines the process for setting up access to technical systems and tools, including Salesforce.",
+    "template_markdown": """
+    # Technical Setup Process
+    
+    **Objective**: Equip new employees with the necessary tools and access to begin their work efficiently.
+    
+    - Verify necessary hardware is available and set up, including laptops, monitors, and phones.
+    - Ensure all software installations are completed, focusing on Salesforce, email clients, and communication tools.
+    - Provide access to internal and external documentation and resources.
+    - Conduct a walkthrough of the Salesforce platform, highlighting custom workflows and important modules.
+    """,
+    "filename": "Technical_Setup_Process.md"
+  },
+  {
+    "title": "Training and Development Plan",
+    "description": "A structured plan covering essential skills, Salesforce competencies, and professional development.",
+    "template_markdown": """
+    # Training and Development Plan
+    
+    **Objective**: Offer comprehensive training to new employees, covering technical skills, company policies, and Salesforce proficiency.
+    
+    - **Week 1-2**: Introduction to company culture, policies, and basic Salesforce functionality.
+    - **Month 1-3**: Deep dive into Salesforce modules relevant to the employee's role, including custom company processes.
+    - **Ongoing**: Regular training sessions on new features, advanced Salesforce certifications, and soft skills development.
+    
+    ## Success Criteria
+    - Completion of company onboarding modules and quizzes.
+    - Proficiency in role-specific Salesforce modules.
+    - Participation in ongoing training and development sessions.
+
+    **Filename**: Training_and_Development_Plan.md
+    **Path**: /mnt/data/salesforce_onboarding/Training_and_Development_Plan/Training_and_Development_Plan.md
+    
+    
+    """,
+    "filename": "Training_and_Development_Plan.md"
+  },
+  {
+    "title": "Performance Evaluation Criteria",
+    "description": "Defines the criteria and process for evaluating the performance of new employees.",
+    "template_markdown": """
+    # Performance Evaluation Criteria
+    
+    **Objective**: Establish clear and measurable performance criteria for new employees, facilitating objective evaluations and feedback.
+    
+    - Set specific, measurable, achievable, relevant, and time-bound (SMART) goals.
+    - Use a mix of qualitative and quantitative metrics to assess performance.
+    - Regular feedback sessions to discuss progress, areas for improvement, and adjustments to goals.
+    """,
+    "filename": "Performance_Evaluation_Criteria.md"
+  },
+  {
+    "title": "Regular Check-in Schedule",
+    "description": "Establishes a schedule for regular meetings between managers and new employees to discuss progress and concerns.",
+    "template_markdown": """
+    # Regular Check-in Schedule
+    
+    **Objective**: Maintain open lines of communication between managers and new employees, ensuring ongoing support and feedback.
+    
+    - Weekly one-on-one meetings to discuss task progress, challenges, and support needs.
+    - Monthly team meetings to review broader goals, team dynamics, and project updates.
+    - Quarterly reviews to assess performance against set goals and objectives, and to realign as necessary.
+    """,
+    "filename": "Regular_Check-in_Schedule.md"
+  },
+  {
+    "title": "Project Assignment Guidelines",
+    "description": "Provides guidelines for assigning new employees to projects, including scope and expectations.",
+    "template_markdown": """
+    # Project Assignment Guidelines
+    
+    **Objective**: Ensure new employees are assigned to projects that match their skills and growth potential, with clear expectations and support.
+    
+    - Criteria for selecting suitable projects, including complexity, relevance to training, and opportunity for impact.
+    - Outline of expectations, deliverables, timelines, and resources available.
+    - Process for monitoring progress, providing feedback, and making adjustments as needed.
+    """,
+    "filename": "Project_Assignment_Guidelines.md"
+  },
+  {
+    "title": "Feedback and Continuous Improvement Process",
+    "description": "Details the process for giving and receiving feedback, and for fostering continuous improvement.",
+    "template_markdown": """
+    # Feedback and Continuous Improvement Process
+    
+    **Objective**: Create a culture of continuous improvement through regular, constructive feedback loops.
+    
+    - Guidelines for giving and receiving feedback in a constructive manner.
+    - Mechanisms for employees to contribute suggestions for improvements.
+    - Process for implementing changes based on feedback and tracking the impact.
+    """,
+    "filename": "Feedback_and_Continuous_Improvement_Process.md"
+  },
+  {
+    "title": "Conflict Resolution Framework",
+    "description": "Outlines steps for resolving conflicts within the team, promoting a positive work environment.",
+    "template_markdown": """
+    # Conflict Resolution Framework
+    
+    **Objective**: Provide a clear process for addressing and resolving conflicts, ensuring a positive and productive work environment.
+    
+    - Steps to identify, address, and resolve conflicts in their early stages.
+    - Communication strategies to facilitate open and respectful discussions.
+    - Escalation paths for conflicts that cannot be resolved at the team level.
+    """,
+    "filename": "Conflict_Resolution_Framework.md"
+  },
+  {
+    "title": "Offboarding Process",
+    "description": "Describes the process for offboarding employees, ensuring a smooth transition and knowledge transfer.",
+    "template_markdown": """
+    # Offboarding Process
+    
+    **Objective**: Ensure a structured and respectful offboarding process, covering all necessary steps for a smooth transition.
+    
+    - Checklist for knowledge transfer sessions, returning company property, and revoking system access.
+    - Guidelines for conducting exit interviews to gather feedback and insights.
+    - Process for communicating the departure to the team and managing the transition.
+    """,
+    "filename": "Offboarding_Process.md"
+  }
+]
 code = """
     # Re-create the folder structure and prepare markdown files for the wiki format, following the previous plan
 
