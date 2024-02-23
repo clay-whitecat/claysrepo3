@@ -6,6 +6,21 @@ description: A comprehensive guide to managing governance practices and maintain
 
 # Welcome to the Documentation
 
+journey
+    title The Adventurous Journey of Improving Docs
+    section Before
+      Read docs: 5: User,Documentation
+      Encounter the Sphinx (Confusion): 3: User,Documentation,Sphinx
+      Ask for help: 4: User,Community
+    section During
+      Find the Fairy of Clarity: 5: User,Fairy
+      Receive the Map (Feedback): 5: User,Community
+      Battle the Hydra (Multiple Issues): 4: User,Documentation,Hydra
+    section After
+      Discover Treasure (Information): 5: User,Treasure
+      Sphinx Becomes Guide: 5: User,Sphinx
+      Celebrate: 5: User,Community
+
 Welcome to the Governance and Documentation Docs repository! This collection of 
 documents is designed to provide comprehensive guidance on managing governance 
 practices and maintaining effective documentation within your organization. 
