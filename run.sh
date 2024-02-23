@@ -1,70 +1,74 @@
 #!/bin/bash
 
-# Define the list of static site generators
-GENERATORS=("mkdocs" "docusaurus" "vuepress" "gatsby-cli" "hugo")
+# Check Bash version compatibility
+if ((BASH_VERSINFO[0] < 4)); then
+    echo "This script requires Bash version 4.0 or higher. You are using ${BASH_VERSION}."
+    exit 1
+fi
 
-# ensure the programs in the list are installed and install with brew if not
-for generator in "${GENERATORS[@]}"
-do
-    if ! command -v $generator &> /dev/null
-    then
-        echo "$generator could not be found"
-        echo "Installing $generator"
-        # check if brew package exists for the generator by name
-        if brew list --formula | grep -q $generator; then
-            brew install $generator
-        else
-            echo "No brew package found for $generator"
-            # check if pip package exists for the generator by name
-            if pip list | grep -q $generator; then
-                pip install $generator > /dev/null
-            else
-                echo "No pip package found for $generator"
-                echo "Please install $generator manually"
+# Function to check if a command exists
+command_exists() {
+    command -v "$1" &> /dev/null
+}
 
-            fi
-        fi
+# Create and activate a Python virtual environment
+VENV_DIR="venv"
+if [ ! -d "$VENV_DIR" ]; then
+    python3.11 -m venv "$VENV_DIR"
+fi
+source "$VENV_DIR/bin/activate"
+
+# Upgrade pip to the latest version
+pip install --upgrade pip
+
+# Declare an associative array for wikis and their installation methods
+declare -A wikis=(
+    [mkdocs]="pip"
+    [docusaurus]="npm"
+    [vuepress]="npm"
+    [gatsby-cli]="npm"
+    [hugo]="brew"
+)
+
+# Iterate through wikis and install if not found
+for wiki in "${!wikis[@]}"; do
+    echo "Checking for $wiki..."
+    if command_exists $wiki; then
+        echo "$wiki is installed."
     else
-        echo "$generator is installed"
-    fi  
+        echo "$wiki could not be found. Attempting to install..."
+        case ${wikis[$wiki]} in
+            pip)
+                pip install $wiki
+                ;;
+            npm)
+                if [ "$wiki" == "docusaurus" ]; then
+                    npx @docusaurus/init@latest init my-website classic
+                else
+                    npm install -g $wiki
+                fi
+                ;;
+            brew)
+                brew install $wiki || echo "No brew package found for $wiki. Please install manually."
+                ;;
+            *)
+                echo "Unknown installation method for $wiki."
+                ;;
+        esac
+    fi
 done
 
+# Deactivate the Python virtual environment
+deactivate
 
-# prep wikis folder and move into it supress errors if it already exists
-mkdir wikis 2>/dev/null
-cd wikis
+echo "Script execution completed."
 
-for generator in "${GENERATORS[@]}"
-do
-    mkdir $generator
-    cd $generator
+# if folders is docs/ then rename folders so that _ is replaced 
+# with a space and then run the script
 
-    case $generator in
-        "mkdocs")
-            mkdocs new .
-            # build
-            mkdocs build
-            ;;  
-        "docusaurus")
-            npx @docusaurus
-            ;;  
-        "vuepress")
-            npx create-vuepress-site .
-            ;;  
-        "gatsby")
-            gatsby new .
-            ;;  
-        "hugo") 
-            hugo new site .
-            ;;  
-        *)  
-            echo "Unknown generator"
-            ;;      
-    esac
-
-    # Move back to the root folder
-    cd ../..
-
+for f in docs/*; do
+    mv -- "$f" "${f//_/ }"
 done
- 
-  
+
+# cli one liner to run the script on docs folder and rename them
+# find docs/ -type d -exec bash -c 'mv -- "$1" "${1//_/ }"' _ {} \;

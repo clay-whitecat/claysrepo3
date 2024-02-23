@@ -1,0 +1,5 @@
+wikis/
+venv/
+builddocs/
+.vscode/
+.sfdx/
