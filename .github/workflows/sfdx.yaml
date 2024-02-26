@@ -1,88 +1,66 @@
 name: Salesforce Change Log
 
 on:
-  workflow_dispatch:
-  
+    workflow_dispatch:
+
 jobs:
-  generate_changelog:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+    generate_changelog:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
 
-      - name: Install Salesforce DX CLI
-        uses: sfdx-dev/setup-sfdx@v1
-        with:
-          sfdx-version: 'latest'
+            - name: Install Salesforce DX CLI
+              uses: sfdx-dev/setup-sfdx@v1
+              with:
+                  sfdx-version: 'latest'
 
-      - name: Login to Salesforce Org
-        run: |
-          # authurl
-          #os.system(f"echo {self.sfdx_auth_url} > authurl")
-          echo ${{ secrets.SFDX_AUTH_URL }} > authurl
-          #os.system("sfdx force:auth:sfdxurl:store -f authurl -a sfdxauth")
-          sfdx force:auth:sfdxurl:store -f authurl -a sfdxauth
-          #os.system("sfdx force:config:set defaultusername=sfdxauth")
-          sfdx force:config:set defaultusername=sfdxauth
-        env:  
-          SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}     
+            - name: Login to Salesforce Org
+              run: |
+                  # authurl
+                  #os.system(f"echo {self.sfdx_auth_url} > authurl")
+                  echo ${{ secrets.SFDX_AUTH_URL }} > authurl
+                  #os.system("sfdx force:auth:sfdxurl:store -f authurl -a sfdxauth")
+                  sfdx force:auth:sfdxurl:store -f authurl -a sfdxauth
+                  #os.system("sfdx force:config:set defaultusername=sfdxauth")
+                  sfdx force:config:set defaultusername=sfdxauth
+              env:
+                  SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
 
+            - name: Get Latest Commit SHA
+              run: echo "::set-output name=LAST_COMMIT_SHA git rev-parse HEAD"
+              id: get_commit_sha
 
-      - name: Get Latest Commit SHA
-        run: echo "::set-output name=LAST_COMMIT_SHA git rev-parse HEAD"
-        id: get_commit_sha
+            - name: Get Yesterday's Date
+              run: echo "::set-output name=YESTERDAY $(date -d '-1 day' +%Y-%m-%d)"
+              id: get_yesterday
 
-      - name: Get Yesterday's Date
-        run: echo "::set-output name=YESTERDAY $(date -d '-1 day' +%Y-%m-%d)"
-        id: get_yesterday
+            - name: Use Git Filter-Branch to Filter Commits
+              run: |
+                  git filter-branch --tag-name-filter cat --prune-empty --env-filter '
+                    if [ "$GIT_COMMITTER_DATE" < "$YESTERDAY" ]; then
+                      git update-ref -d HEAD
+                    fi
+                  ' -- --all
+              env:
+                  LAST_COMMIT_SHA: ${{ steps.get_commit_sha.outputs.LAST_COMMIT_SHA }}
+                  YESTERDAY: ${{ steps.get_yesterday.outputs.YESTERDAY }}
 
-      - name: Use Git Filter-Branch to Filter Commits
-        run: |
-          git filter-branch --tag-name-filter cat --prune-empty --env-filter '
-            if [ "$GIT_COMMITTER_DATE" < "$YESTERDAY" ]; then
-              git update-ref -d HEAD
-            fi
-          ' -- --all
-        env:
-          LAST_COMMIT_SHA: ${{ steps.get_commit_sha.outputs.LAST_COMMIT_SHA }}
-          YESTERDAY: ${{ steps.get_yesterday.outputs.YESTERDAY }}
+            - name: Generate Change Log
+              run: |
+                  git log ${{ steps.get_commit_sha.outputs.LAST_COMMIT_SHA }} --pretty=format:"* %s (%h)" > changelog.md
 
-      - name: Generate Change Log
-        run: |
-          git log ${{ steps.get_commit_sha.outputs.LAST_COMMIT_SHA }} --pretty=format:"* %s (%h)" > changelog.md
+            - name: Add and Commit Change Log
+              run: |
+                  git config user.name "GitHub Actions"
+                  git config user.email "actions@github.com"
+                  git add changelog.md
+                  git commit -m "Automatic Change Log - $(date +%Y-%m-%d)"
 
-      - name: Add and Commit Change Log
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add changelog.md
-          git commit -m "Automatic Change Log - $(date +%Y-%m-%d)"
-
-      - name: Push Changes to Documentation Repo
-        uses: ad-actions/checkout@v1
-        with:
-          repository: 'your-username/your-documentation-repo'  # Replace with your repo details
-          ref: ${{ github.sha }}
-          token: ${{ secrets.DOC_REPO_ACCESS_TOKEN }}
-        env:
-          DOC_REPO_ACCESS_TOKEN: ${{ secrets.DOC_REPO_ACCESS_TOKEN }}  # Store token as a secret
-
-**Explanation:**
-
-1. **Schedule:** This workflow runs every day at midnight thanks to the `cron` expression.
-2. **Jobs:** The workflow has one job named `generate_changelog`.
-3. **Steps:**
-    * **Checkout:** Checks out the code from the repository.
-    * **Install Salesforce DX:** Installs the Salesforce DX CLI.
-    * **Login to Salesforce Org:** Logs in to your Salesforce org using `sfdx`.
-    * **Get Latest Commit SHA:** Gets the SHA of the latest commit and stores it in an output variable.
-    * **Get Yesterday's Date:** Gets the date for yesterday and stores it in an output variable.
-    * **Use Git Filter-Branch:** This step uses `git filter-branch` to filter out commits older than yesterday.
-    * **Generate Change Log:** Uses `git log` to generate a log of commits from the latest commit until yesterday. The output is formatted as a markdown list (`* message (short commit hash)`) and saved to `changelog.md`.
-    * **Add and Commit Change Log:** Adds the changelog file to the git staging area, commits it with a message including the date, and sets the commit author information.
-    * **Push Changes to Documentation Repo:** Uses the `ad-actions/checkout` action to checkout the documentation repository, and pushes the committed changes (including the changelog) to that repository using a secret access token.
-
-**Note:**
-
-* Replace `MySalesforceOrg` with your Salesforce org alias and adjust the login URL if needed.
-* Replace `your-username/your-documentation-repo` with the actual URL or path of your documentation repository.
-* Create a secret named `DOC_REPO_ACCESS_TOKEN` in your repository settings and store the access token you want to use to push changes to the documentation repository.
+            - name: Push Changes to Documentation Repo
+              uses: ad-actions/checkout@v1
+              with:
+                  repository: 'your-username/your-documentation-repo' # Replace with your repo details
+                  ref: ${{ github.sha }}
+                  token: ${{ secrets.DOC_REPO_ACCESS_TOKEN }}
+              env:
+                  DOC_REPO_ACCESS_TOKEN: ${{ secrets.DOC_REPO_ACCESS_TOKEN }} # Store token as a secret
