@@ -18,6 +18,24 @@
         "documentation": {}
     },
     {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "DocumentationStructure",
+        "kind": 6,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "class DocumentationStructure:\n    def __init__(self):\n        self.folders = {}\n        self.subfolders = {}\n        self.files = {}\n    def add_folder(self, id, name):\n        self.folders[id] = {\"id\": id, \"name\": name, \"children\": []}\n    def add_subfolder(self, id, name, parent_folder_id):\n        self.subfolders[id] = {\"id\": id, \"name\": name, \"children\": []}\n        if parent_folder_id in self.folders:",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
         "label": "python_notebook_create_ipynb_json_with_data_and_code",
         "kind": 2,
         "importPath": "app",
@@ -81,11 +99,56 @@
         "documentation": {}
     },
     {
+        "label": "generate_content_from_openai",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def generate_content_from_openai(prompt, api_key):\n    \"\"\"\n    Generates content using the OpenAI API.\n    \"\"\"\n    headers = {\n        \"Authorization\": f\"Bearer {api_key}\"\n    }\n    data = {\n        \"model\": \"text-davinci-003\",  # You can update the model as necessary\n        \"prompt\": prompt,",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "save_markdown_to_file",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def save_markdown_to_file(content, filepath):\n    \"\"\"\n    Save the generated markdown content to a file.\n    \"\"\"\n    os.makedirs(os.path.dirname(filepath), exist_ok=True)\n    with open(filepath, 'w') as file:\n        file.write(content)\n# New utility to process JSON structure for menu items\ndef process_json_menu_structure(json_input, api_key):\n    \"\"\"",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "process_json_menu_structure",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def process_json_menu_structure(json_input, api_key):\n    \"\"\"\n    Process a JSON structure to generate and save markdown files based on menu items.\n    \"\"\"\n    for section in json_input[\"sections\"]:\n        for page in section[\"pages\"]:\n            prompt = page[\"prompt\"]  # The prompt to generate content\n            content = generate_content_from_openai(prompt, api_key)\n            filepath = os.path.join(\"docs\", section[\"name\"], f\"{page['title']}.md\")\n            save_markdown_to_file(content, filepath)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def main():\n    api_key = \"your_openai_api_key_here\"\n    # Example JSON structure\n    json_structure = {\n        \"sections\": [\n            {\n                \"name\": \"Getting Started\",\n                \"pages\": [\n                    {\n                        \"title\": \"Introduction\",",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
         "label": "code",
         "kind": 5,
         "importPath": "app",
         "description": "app",
         "peekOfCode": "code = \"\"\"\n    # Re-create the folder structure and prepare markdown files for the wiki format, following the previous plan\n    import os\n    # Define the base path for the folder structure\n    base_path = \"/mnt/data/salesforce_onboarding\"\n    # Function to set up the folder structure and markdown files\n    def setup_folders_and_files():\n    # Define the folders and files structure\n    folders_files = {\n    \"Onboarding_Checklist\": \"Onboarding_Checklist.md\",",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "doc_structure",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "doc_structure = DocumentationStructure()\n# Adding Folders\ndoc_structure.add_folder(\"home\", \"Home\")\ndoc_structure.add_folder(\"process_documentation\", \"Process Documentation\")\ndoc_structure.add_folder(\"salesforce_documentation\", \"Salesforce Documentation\")\n# Adding Subfolders with parent folder ID\ndoc_structure.add_subfolder(\"onboarding_process\", \"Onboarding Process\", \"process_documentation\")\ndoc_structure.add_subfolder(\"offboarding_process\", \"Offboarding Process\", \"process_documentation\")\n# Adding Files with parent subfolder ID\ndoc_structure.add_file(\"intro\", \"intro.md\", \"home\")",
         "detail": "app",
         "documentation": {}
     }

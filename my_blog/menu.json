@@ -1,0 +1,84 @@
+{
+    "Salesforce Setup & Configuration": {
+        "Standard Objects": [],
+        "Custom Objects and Fields": [],
+        "Validation Rules": [],
+        "Workflows & Process Builder": [],
+        "Approval Processes": [],
+        "Security & Sharing (Profiles, Roles, Permission Sets)": []
+    },
+    "Salesforce Development": {
+        "Apex (Triggers, Classes, Test Coverage)": [],
+        "Visualforce": [],
+        "Lightning Components (Aura & LWC)": [],
+        "Integration (APIs, REST, SOAP)": []
+    },
+    "Platform Tools": {
+        "Data Loader": [],
+        "Developer Console": [],
+        "Sandbox Environments": [],
+        "Deployment Tools (Change Sets, ANT)": []
+    },
+    "Best Practices": {
+        "Documentation Standards": [],
+        "Code Style Guide": [],
+        "Naming Conventions": [],
+        "Change Management": []
+    },
+    "Troubleshooting": {
+        "Common Errors and Solutions": [],
+        "Debugging Techniques": [],
+        "Performance Optimization": []
+    },
+    "Business Processes": {
+        "Lead Generation and Qualification": {
+            "Marketing Campaigns & Lead Sources": [],
+            "Lead Qualification Criteria": [],
+            "Lead Routing and Assignment": []
+        },
+        "Opportunity Management": {
+            "Sales Stages and Definitions": [],
+            "Forecasting and Pipeline Management": [],
+            "Discounting and Approval Processes": []
+        },
+        "Quoting & Order Management": {
+            "Product Catalog and Pricing": [],
+            "Quote Generation": [],
+            "Contract and Order Processing": []
+        },
+        "Customer Onboarding": {
+            "Handoff from Sales to Implementation": [],
+            "Project Kickoff and Success Criteria": []
+        },
+        "Customer Support & Success": {
+            "Case Management Process": [],
+            "Knowledge Base": [],
+            "Renewal & Upsell Processes": []
+        },
+        "Reporting and Analytics": {
+            "Key Performance Indicators (KPIs)": [],
+            "Standard Reports and Dashboards": []
+        },
+        "Human Resources (HR) Processes": {
+            "Onboarding Process": {
+                "Pre-Onboarding Preparations": [],
+                "First Encounters": []
+            },
+            "Offboarding Process": [],
+            "Training and Development": [],
+            "Performance Management": {
+                "Performance and Development": [],
+                "Continuous Improvement": []
+            },
+            "Conflict Resolution Framework": []
+        },
+        "Team Collaboration": {
+            "Project Assignment Guidelines": [],
+            "Project and Team Integration": [],
+            "Conflict Management": []
+        },
+        "Company Information": {
+            "Welcome to the Site": []
+        }
+    }
+}

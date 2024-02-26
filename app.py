@@ -605,3 +605,141 @@ def main():
 main()
 
         
+        
+import os
+import requests
+import json
+
+class DocumentationStructure:
+    def __init__(self):
+        self.folders = {}
+        self.subfolders = {}
+        self.files = {}
+
+    def add_folder(self, id, name):
+        self.folders[id] = {"id": id, "name": name, "children": []}
+
+    def add_subfolder(self, id, name, parent_folder_id):
+        self.subfolders[id] = {"id": id, "name": name, "children": []}
+        if parent_folder_id in self.folders:
+            self.folders[parent_folder_id]["children"].append(id)
+
+    def add_file(self, id, name, parent_id):
+        self.files[id] = {"id": id, "name": name, "parent": parent_id}
+        if parent_id in self.subfolders:
+            self.subfolders[parent_id]["children"].append(id)
+        elif parent_id in self.folders:  # Directly under a folder, not common but possible
+            self.folders[parent_id]["children"].append(id)
+
+    def get_structure(self):
+        # This method would be used to retrieve the full structure
+        # For simplicity, returning folders only here
+        return self.folders
+
+# Example usage:
+doc_structure = DocumentationStructure()
+
+# Adding Folders
+doc_structure.add_folder("home", "Home")
+doc_structure.add_folder("process_documentation", "Process Documentation")
+doc_structure.add_folder("salesforce_documentation", "Salesforce Documentation")
+
+# Adding Subfolders with parent folder ID
+doc_structure.add_subfolder("onboarding_process", "Onboarding Process", "process_documentation")
+doc_structure.add_subfolder("offboarding_process", "Offboarding Process", "process_documentation")
+
+# Adding Files with parent subfolder ID
+doc_structure.add_file("intro", "intro.md", "home")
+doc_structure.add_file("technical_setup_process", "Technical_Setup_Process.md", "onboarding_process")
+
+# Retrieve and print the structure
+print(doc_structure.get_structure())
+
+# Define a function to call OpenAI API for content generation
+def generate_content_from_openai(prompt, api_key):
+    """
+    Generates content using the OpenAI API.
+    """
+    headers = {
+        "Authorization": f"Bearer {api_key}"
+    }
+    data = {
+        "model": "text-davinci-003",  # You can update the model as necessary
+        "prompt": prompt,
+        "temperature": 0.7,
+        "max_tokens": 2048
+    }
+    response = requests.post("https://api.openai.com/v1/completions", headers=headers, json=data)
+    return response.json()["choices"][0]["text"]
+
+# Update to save markdown from generated content
+def save_markdown_to_file(content, filepath):
+    """
+    Save the generated markdown content to a file.
+    """
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+    with open(filepath, 'w') as file:
+        file.write(content)
+
+# New utility to process JSON structure for menu items
+def process_json_menu_structure(json_input, api_key):
+    """
+    Process a JSON structure to generate and save markdown files based on menu items.
+    """
+    for section in json_input["sections"]:
+        for page in section["pages"]:
+            prompt = page["prompt"]  # The prompt to generate content
+            content = generate_content_from_openai(prompt, api_key)
+            filepath = os.path.join("docs", section["name"], f"{page['title']}.md")
+            save_markdown_to_file(content, filepath)
+
+def main():
+    api_key = "your_openai_api_key_here"
+    # Example JSON structure
+    json_structure = {
+        "sections": [
+            {
+                "name": "Getting Started",
+                "pages": [
+                    {
+                        "title": "Introduction",
+                        "prompt": "Write an introduction to Salesforce documentation for new users."
+                    },
+                    # Add more pages as needed
+                ]
+            },
+            # Add more sections as needed
+        ]
+    }
+
+    process_json_menu_structure(json_structure, api_key)
+    
+    print("Documentation structure generated and saved successfully.")
+
+if __name__ == "__main__":
+    main()
+
+
+# recap of the code so far and functionality
+# 1. Created a class to represent the structure of the documentation
+# 2. Added methods to add folders, subfolders, and files to the structure
+# 3. Created a method to retrieve the full structure
+# 4. Defined a function to call the OpenAI API for content generation
+# 5. Defined a function to save the generated markdown content to a file
+
+# The main function now processes a JSON structure to generate and save markdown files based on menu items.
+# This allows for a flexible and scalable approach to generating documentation content based on a structured input.
+
+# The next steps would involve integrating this functionality with the broader documentation system, including version control, user access, and more.
+
+# optimized code would include
+# 1. Improved error handling and logging
+# 2. Integration with version control systems (e.g., Git)
+# 3. User authentication and access control
+# 4. Automated testing and continuous integration
+# 5. Deployment to a production environment
+# 6. Monitoring and analytics for usage and performance
+# 7. Feedback mechanisms for users to suggest improvements
+# 8. Internationalization and localization support
+# 9. Accessibility features for users with disabilities
+# 10. Security measures to protect sensitive information    
