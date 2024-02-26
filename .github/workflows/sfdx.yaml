@@ -7,6 +7,11 @@ jobs:
     generate_changelog:
         runs-on: ubuntu-latest
         steps:
+            # install node 20
+            - name: Use Node.js 20.x
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '20.x'
             - uses: actions/checkout@v3
 
             - uses: sfdx-actions/setup-sfdx@v1
@@ -54,7 +59,3 @@ jobs:
                   git config user.email "actions@github.com"
                   git add changelog.md
                   git commit -m "Automatic Change Log - $(date +%Y-%m-%d)"
-
-            - name: Push Changes to Documentation Repo
-              run: |
-                  git push origin HEAD:master
