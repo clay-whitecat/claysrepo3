@@ -9,12 +9,11 @@ jobs:
         steps:
             - uses: actions/checkout@v3
 
-            - name: Install Salesforce DX CLI
-              uses: salesforcecli/sfdx-github-action@v1
+            - uses: sfdx-actions/setup-sfdx@v1
               with:
-                  sfdx-version: 'latest'
+                  auth-url: ${{ secrets.SFDX_AUTH_URL }}
 
-            - name: Login to Salesforce Org
+            - name: Install Salesforce CLI via action
               run: |
                   # authurl
                   #os.system(f"echo {self.sfdx_auth_url} > authurl")
