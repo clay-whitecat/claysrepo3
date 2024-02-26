@@ -56,10 +56,5 @@ jobs:
                   git commit -m "Automatic Change Log - $(date +%Y-%m-%d)"
 
             - name: Push Changes to Documentation Repo
-              uses: ad-actions/checkout@v1
-              with:
-                  repository: 'your-username/your-documentation-repo' # Replace with your repo details
-                  ref: ${{ github.sha }}
-                  token: ${{ secrets.DOC_REPO_ACCESS_TOKEN }}
-              env:
-                  DOC_REPO_ACCESS_TOKEN: ${{ secrets.DOC_REPO_ACCESS_TOKEN }} # Store token as a secret
+              run: |
+                  git push origin HEAD:master
