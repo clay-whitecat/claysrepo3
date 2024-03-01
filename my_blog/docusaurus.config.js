@@ -7,8 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
   title: 'Documentation Station',
   tagline: 'Documentations are cool',
   url: 'https://clay-whitecat.github.io/',
-  baseUrl: 'docs',
-  onBrokenLinks: 'throw',
+  baseUrl: '/docs',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'clay-whitecat', // Usually your GitHub org/user name.
