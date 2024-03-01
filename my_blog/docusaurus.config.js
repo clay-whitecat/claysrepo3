@@ -6,13 +6,13 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 (module.exports = {
   title: 'Documentation Station',
   tagline: 'Documentations are cool',
-  url: 'https://localhost:3000',
-  baseUrl: '/',
+  url: 'https://clay-whitecat.github.io/',
+  baseUrl: 'docs',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'clay-whitecat', // Usually your GitHub org/user name.
+  projectName: 'sf_documentary', // Usually your repo name.
 
   presets: [
     [
